@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" xmlns:th="https://www.thymeleaf.org">
+  <title>Task 6 Clothing Admin Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+     <title>Task-6- Clothing</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+      /* Set default font family and color */
+      body {
+        font-family: Arial, sans-serif;
+        color: #333;
+      }
+
+      /* Set header style */
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background-color: #c69500;
+      }
+      header h1 {
+        left: 50%;
+        color: #fafafa;
+        box-shadow:
+                2px 2px 5px #888888,
+                -2px -2px 5px #000000;
+        border-radius: 5px;
+      }
+
+      /* Style logout link */
+      header a {
+        text-decoration: none;
+        color: #fafafa;
+        border: 1px solid #666;
+        padding: 0.5rem;
+        border-radius: 50px;
+        box-shadow:
+                2px 2px 5px #ba8b00,
+                -2px -2px 5px #000000;
+
+      }
+
+      /* Style search form */
+      nav form {
+        margin: 1rem 0;
+      }
+
+      nav label {
+        margin-right: 0.5rem;
+      }
+
+      nav input[type="text"] {
+        padding: 0.5rem;
+        border-radius: 5px;
+        border: none;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+      }
+
+      nav button[type="submit"] {
+        padding: 0.5rem;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      /* Style navigation links */
+      nav ul {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      nav li {
+        margin-left: 1rem;
+      }
+
+      nav a {
+        text-decoration: none;
+        color: #333;
+      }
+
+      nav a:hover {
+        text-decoration: underline;
+      }
+
+      /* Style products table */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th, td {
+        padding: 0.5rem;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        align-items: center;
+        background-color: #f2f2f2;
+      }
+
+      /* Style remove button */
+      .remove-btn {
+        padding: 0.5rem;
+        background-color: #ff6961;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .remove-btn:hover {
+        background-color: #ff4136;
+      }
+
+      /* Style form for updating price and quantity */
+      form {
+        display: inline-block;
+      }
+
+      form label {
+        display: inline-block;
+        margin-right: 10px;
+      }
+
+      form input[type="number"] {
+        width: 80px;
+        padding: 5px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        margin-right: 10px;
+      }
+
+      form button[type="submit"] {
+        background-color: #000000;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      form button[type="submit"]:hover {
+        background-color: #3e8e41;
+      }
+
+    </style>
+  </head>
+<body style="background: #ba8b00">
+<div class="container-fluid">
+  <div class="row bg-secondary py-1 px-xl-5">
+    <div class="col-lg-6 d-none d-lg-block">
+      <div class="d-inline-flex align-items-center h-100">
+        <a class="text-body mr-3" href="">About</a>
+        <a class="text-body mr-3" href="">Contact</a>
+        <a class="text-body mr-3" href="">Help</a>
+      </div>
+    </div>
+    <div class="col-lg-6 text-center text-lg-right">
+      <div class="d-inline-flex align-items-center">
+        <div class="btn-group" th:if="${userID != null}">
+          <form th:action="@{/logout}" method="get">
+            <button type="submit"><i class='fa fa-power-off' style='color:#cf8607'></i></button>
+          </form>
+        </div>
+        <div class="btn-group mx-2">
+          <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">NGN</button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <button class="dropdown-item" type="button">USD</button>
+            <button class="dropdown-item" type="button">GBP</button>
+            <button class="dropdown-item" type="button">CAD</button>
+          </div>
+        </div>
+        <div class="btn-group">
+          <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">EN</button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <button class="dropdown-item" type="button">USD</button>
+            <button class="dropdown-item" type="button">AR</button>
+            <button class="dropdown-item" type="button">RU</button>
+          </div>
+        </div>
+      </div>
+      <div class="d-inline-flex align-items-center d-block d-lg-none">
+        <a href="" class="btn px-0 ml-2">
+          <i class="fas fa-heart text-dark"></i>
+          <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;">0</span>
+        </a>
+        <a href="cart.html" class="btn px-0 ml-2">
+          <i class="fas fa-shopping-cart text-dark"></i>
+          <span class="badge text-dark border border-dark rounded-circle" style="padding-bottom: 2px;">0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center bg-light py-3 px-xl-5 d-none d-lg-flex">
+    <div class="col-lg-4">
+      <a href="" class="text-decoration-none">
+        <span class="h1 text-uppercase text-primary bg-header px-2">Task-6-</span>
+        <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Clothing</span>
+      </a>
+    </div>
+    <div class="col-lg-4 col-6 text-left">
+      //Todo: make here the search button
+      <form action="">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search for products">
+          <div class="input-group-append">
+                            <span class="input-group-text bg-transparent text-primary">
+                                <i class="fa fa-search"></i>
+                            </span>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-4 col-6 text-right">
+      <p class="m-0 font1" ><a href="#">Customer Service</a></p>
+      <h5 class="m-0 font1"><a href="#">DecagonWeek6Task@dec.com</a></h5>
+    </div>
+  </div>
+</div>
+<header>
+  <a th:href="@{/}">Home</a>
+</header>
+<nav>
+  <form>
+    <label for="search">Search Products:</label>
+    <input type="text" id="search" name="search">
+    <button type="submit">Search</button>
+  </form>
+  <ul>
+    <li><button><a href="#">View Orders</a></button></li>
+       <li><a href="#">Add Product</a></li>
+  </ul>
+</nav>
+<main>
+  <h2>Products List</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>ADD PRODUCT</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>
+        <form method="post" th:action="@{/addProduct}" th:object="${products}" enctype="multipart/form-data">
+          <label for="productname">Set Product Name:</label>
+          <input type="text" id="productname" name="productName" th:field="*{productName}" />
+          <label for="prices">Set Price:</label>
+          <input type="number" id="prices" name="price" th:field="*{price}" />
+          <label for="quantitys">Set Quantity:</label>
+          <input type="number" id="quantitys" name="quantity" th:field="*{quantity}" />
+          <label for="category">Set Category:</label>
+          <input type="text" id="category" name="category" th:field="*{category}" />
+          <label for="imageUrl">Set Product Image:</label>
+          <input type="file" id="imageUrl" name="imageUrl" th:field="*{imageUrl}" />
+          <button type="submit">Add Product</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <br>
+  <br>
+
+  <h2>Products List</h2>
+  <table th:if="${productList!= null}">
+    <thead>
+    <tr>
+      <th>Product Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Product Image</th>
+      <th>Product Update</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="singleProduct:${productList}">
+      <td th:text="${singleProduct.productName}"></td>
+      <td th:text="${singleProduct.price}"></td>
+      <td th:text="${singleProduct.quantity}"></td>
+
+      <td>
+        <img th:src="@{/product/image/{id}(id=${singleProduct.id})}" style="height: 3em; width:2.5em;">
+      </td>
+      <td>
+        <form method="post" th:action="@{/price_update}" th:object="${singleProduct}">
+          <label for="price">Set Price:</label>
+          <input type="hidden" name="product_name" th:value="${singleProduct.id}">
+          <input type="number" id="price" name="price" th:value="${singleProduct.price}">
+          <button type="submit">Update</button>
+        </form>
+        <form method="post" th:action="@{/quantity_update}" th:object="${singleProduct}">
+          <label for="quantity">Set Quantity:</label>
+          <input type="hidden" name="product_name" th:value="${singleProduct.id}">
+          <input type="number" id="quantity" name="quantity" th:value="${singleProduct.quantity}" >
+          <button type="submit">Update</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+
+  <br>
+  <br>
+  <table>
+    <thead>
+    <tr>
+      <th>REMOVE PRODUCT</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+
+      <td>
+        <form method="post" th:action="@{/remove_product}">
+          <label for="productID">Enter ProductID:</label>
+          <input type="number" id="productID" name="productID" th:field="${products.id}">
+          <button type="submit">Remove Product</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>
